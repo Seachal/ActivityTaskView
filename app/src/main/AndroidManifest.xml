@@ -20,7 +20,8 @@
             android:name=".DialogActivity"
             android:theme="@style/dialogstyle" />
         <activity android:name=".StandardActivity" />
-        <activity android:name=".SingleTopActivity"
+        <activity
+            android:name=".SingleTopActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".SingleTaskActivity"
@@ -29,6 +30,14 @@
             android:name=".SingleInstanceActivity"
             android:launchMode="singleInstance" />
         <activity android:name=".DemoFragmentActivity" />
+
+
+        <!--           android:launchMode="singleTask"-->
+        <activity android:name="cc.rome753.seachal.FirstActivity" />
+        <activity android:name="cc.rome753.seachal.SecondActivity" />
+        <activity android:name="cc.rome753.seachal.ThirdActivity" />
+
+
     </application>
 
 </manifest>

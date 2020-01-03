@@ -11,8 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import cc.rome753.seachal.FirstActivity;
+import cc.rome753.seachal.SecondActivity;
+
 /**
  * Created by rome753@163.com on 2017/3/31.
+ *
+ *
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -147,4 +152,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         addFlags(intent);
         startActivity(intent);
     }
+
+
+    public void startActivityFirst(View v){
+        Intent intent = new Intent(this, FirstActivity.class);
+        addFlags(intent);
+        startActivity(intent);
+    }
+
+    public void startActivitySecond(View v){
+        Intent intent = new Intent(this, SecondActivity.class);
+        addFlags(intent);
+        startActivity(intent);
+    }
+
+
+    public void backFirstActivity(View v){
+        Intent intent = new Intent(this, FirstActivity.class);
+//        addFlags(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
 }

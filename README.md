@@ -1,4 +1,4 @@
-# ActivityTaskView [[中文文档]](https://www.jianshu.com/p/c34483bb5c0f)
+# ActivityTaskView [中文文档]](https://www.jianshu.com/p/c34483bb5c0f)
 
 ![Overview.png](https://github.com/rome753/ActivityTaskView/blob/master/screenshots/overview.png)
 
@@ -62,3 +62,5 @@ https://github.com/rome753/ActivityTaskView/blob/master/app/src/main/java/cc/rom
 ## License
   Apache License, Version 2.0  
   http://www.apache.org/licenses/
+  
+  

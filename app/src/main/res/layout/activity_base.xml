@@ -53,6 +53,31 @@
             android:onClick="startFragmentActivity"
             android:text="@string/start_fragment_activity"
             android:textAllCaps="false" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startActivityFirst"
+            android:text="@string/start_activity_first"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startActivitySecond"
+            android:text="second"
+            android:textAllCaps="false" />
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="backFirstActivity"
+            android:text="backFirstActivity"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <ScrollView
