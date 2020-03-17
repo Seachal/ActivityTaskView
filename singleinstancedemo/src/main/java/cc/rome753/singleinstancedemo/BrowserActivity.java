@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ public class BrowserActivity extends AppCompatActivity {
 
     WebView mWebView;
     String mUrl;
+
+    private  int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,11 @@ public class BrowserActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        i = i++;
+        Toast.makeText(this, "onNewIntent time： "+i, Toast.LENGTH_SHORT).show();
+
         handleIntent(intent);
+
     }
 
     private void handleIntent(Intent intent){

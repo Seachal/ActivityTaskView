@@ -88,6 +88,8 @@ public class ActivityTaskHelper {
             handleActivity(activity);
         }
 
+
+
         @Override
         public void onActivityResumed(Activity activity) {
             handleActivity(activity);

@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="startActivitySecond"
-            android:text="second"
+            android:text="sca:second"
             android:textAllCaps="false" />
 
 
@@ -76,8 +76,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="backFirstActivity"
-            android:text="backFirstActivity"
+            android:text="sca: backFirstActivity"
             android:textAllCaps="false" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showAlterDialog"
+            android:text="sca: showAlterDialog"
+            android:textAllCaps="false" />
+
+
     </LinearLayout>
 
     <ScrollView

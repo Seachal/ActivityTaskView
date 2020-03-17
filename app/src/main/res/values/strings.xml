@@ -8,6 +8,6 @@
     <string name="start_fragment_activity">start fragment activity</string>
 
 
-    <string name="start_activity_first">start_activity_first</string>
+    <string name="start_activity_first">sca:start_activity_first</string>
 
 </resources>
