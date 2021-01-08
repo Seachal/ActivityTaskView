@@ -168,10 +168,12 @@ https://github.com/android-exchange/Android-Interview/blob/92794c586e7842d92eddb
 
 
 
-
+----
 ###  接续拓展，  字节跳动的面试题Activity的启动模式?现在使用 Single Task来启动一个已经存在实例的 Activity?会经历哪些生命周期?在 onnewlntent()中,通过 getlntent(拿到的 Intent,是一个新的 Intent对象吗?
 
-答 ：  getIntent 得到的不是一个新对象， 如果想更新 Intent ,需要调用 setIntent(intent)
+答 ： 
+1.生命周期是  onNewIntent,  onRestart  onStart onResume,
+*  getIntent 得到的不是一个新对象， 如果想更新 Intent ,需要调用 setIntent(intent)
 
 
 
@@ -182,6 +184,7 @@ https://github.com/android-exchange/Android-Interview/blob/92794c586e7842d92eddb
 从微信支付的类中，也印证了 '解答'中的回到
 ![image](http://note.youdao.com/yws/res/25687/2ACD641491B04D6E8CBAB44C60A93181)
 
+----
 
 ##  展示一个 Dialog 时的生命周期 （其实是一个透明的 Activity）
 
@@ -230,6 +233,126 @@ https://github.com/android-exchange/Android-Interview/blob/92794c586e7842d92eddb
 ```
 创建一个真实的 AlterDialog 时，并没有影响StandardActivity 的生命周期，（#StandardActivity : onResume() ）。
 
+---
+
+
+# Android：onNewIntent()触发机制及注意事项 
+**一、****onNewIntent()**
+
+在IntentActivity中重写下列方法：onCreate onStart onRestart  onResume  onPause onStop onDestroy  onNewIntent
+
+1、其他应用发Intent，执行下列方法：
+onCreate
+onStart
+onResume
+
+发Intent的方法:
+
+```
+Uri uri = Uri.parse("philn://blog.163.com");
+Intent it = new Intent(Intent.ACTION_VIEW, uri);    
+startActivity(it);
+```
+
+2、接收Intent声明：
+
+```
+<activity android:name=".IntentActivity" android:launchMode="singleTask"
+                  android:label="@string/testname">
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="philn"/>
+            </intent-filter>
+</activity>
+```
+
+3、如果IntentActivity处于任务栈的顶端，也就是说之前打开过的Activity，现在处于onPause、onStop 状态的话，其他应用再发送Intent的话，执行顺序为：
+onNewIntent，onRestart，onStart，onResume。
+
+在Android应用程序开发的时候，从一个Activity启动另一个Activity并传递一些数据到新的Activity上非常简单，但是当您需要让后台运行的Activity回到前台并传递一些数据可能就会存在一点点小问题。
+
+首先，在默认情况下，当您通过Intent启到一个Activity的时候，就算已经存在一个相同的正在运行的Activity,系统都会创建一个新的Activity实例并显示出来。为了不让Activity实例化多次，我们需要通过在AndroidManifest.xml配置activity的加载方式（launchMode）以实现单任务模式，如下所示：
+
+```
+<activity android:label="@string/app_name" android:launchmode="singleTask"android:name="Activity1"></activity>
+```
+
+launchMode为singleTask的时候，通过Intent启到一个Activity,如果系统已经存在一个实例，系统就会将请求发送到这个实例上，但这个时候，系统就不会再调用通常情况下我们处理请求数据的onCreate方法，而是调用onNewIntent方法，如下所示:
+
+```
+protected void onNewIntent(Intent intent) {
+
+  super.onNewIntent(intent);
+
+  setIntent(intent);//must store the new intent unless getIntent() will return the old one
+
+  processExtraData();
+
+}
+```
+
+不要忘记，系统可能会随时杀掉后台运行的 Activity ，如果这一切发生，那么系统就会调用 onCreate 方法，而不调用 onNewIntent 方法，一个好的解决方法就是在 onCreate 和 onNewIntent 方法中调用同一个处理数据的方法，如下所示：
+
+```
+public void onCreate(Bundle savedInstanceState) {
+
+  super.onCreate(savedInstanceState);
+
+  setContentView(R.layout.main);
+
+  processExtraData();
+
+}
+```
+
+```
+protected void onNewIntent(Intent intent) {
+
+  super.onNewIntent(intent);
+
+   setIntent(intent);//must store the new intent unless getIntent() will return the old one
+
+  processExtraData()
+
+}
+```
+
+```
+private void processExtraData(){
+
+  Intent intent = getIntent();
+
+  //use the data received here
+
+}
+```
+
+ 
+
+**二、****onNewIntent()的setIntent()和getIntent()**
+
+```
+@Override
+protected void onNewIntent(Intent intent) {
+	super.onNewIntent(intent);
+
+	// setIntent(intent);
+
+	int data = getIntent().getIntExtra("HAHA", 0);
+	// int data = intent.getIntExtra("HAHA", 0);
+}
+```
+
+如果没有调用setIntent(intent)，则getIntent()获取的数据将不是你所期望的。但是使用intent.getInXxx，貌似可以获得正确的结果。
+
+注意这句话：
+Note that getIntent() still returns the original Intent. You can use setIntent(Intent) to update it to this new Intent.
+> 请注意，getIntent（）仍返回原始Intent。您可以使用setIntent（Intent）将其更新为新的Intent。
+
+所以最好是调用setIntent(intent)，这样在使用getIntent()的时候就不会有问题了。
+----
 
 
 
